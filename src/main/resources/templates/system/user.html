@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:replace="commons/meta_head :: metaHead(title='快速开发平台 | 用户管理')">
+</head>
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-brand--minimize m-aside-left--minimize">
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <!--导入header-->
+    <div th:replace="commons/header :: header"></div>
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+            <i class="la la-close"></i>
+        </button>
+        <!--导入左侧导航-->
+        <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark "
+             th:insert="commons/left_menu :: leftMenu">
+        </div>
+        <div class="m-grid__item m-grid__item--fluid m-wrapper panel-body" style="padding-bottom: 0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-filter fa-lg"></i>查询内容
+                    <span style="float: right;">
+                        <a class="qry-btn" onclick="doQuery()">
+                            <i class="fa fa-search"></i>查询
+				        </a>
+				    </span>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group col-lg-4">
+                            <label class="col-sm-4 control-label">用户名</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="qUserName" type="text" placeholder="请输入用户名...">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="col-sm-4 control-label">昵称</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="qNickName" type="text" placeholder="请输入昵称...">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="col-sm-4 control-label">状态</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="qStatus" type="text" placeholder="请选择状态...">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        用户管理
+                        <span style="float: right;">
+                            <a class="qry-btn" onclick="">
+                                <i class="fa fa-plus"></i>添加
+                            </a>&nbsp;&nbsp;
+                            <a class="qry-btn btn btn-default" onclick="">
+                                <i class="fa fa-remove"></i>删除
+                            </a>&nbsp;&nbsp;
+                            <a class="qry-btn btn btn-default" onclick="">
+                                <i class="fa fa-pencil"></i>修改
+                            </a>
+                        </span>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <table id="userTable"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--导入footer-->
+    <div th:replace="commons/footer :: footer"></div>
+</div>
+
+<!--------------------------添加/修改信息的弹出层---------------------------->
+<!--addUser begin-->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form class="form-horizontal add-form-rule" id="infoForm">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle">
+                        添加信息
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m_form_1_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            Oh snap! Change a few things up and try submitting again.
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input placeholder=""
+                           value="" type="hidden">
+
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">
+                            用户名
+                        </span>
+                        <div class="col-sm-8">
+                            <input placeholder="请输入用户名"
+                                   name="userName" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">
+                            昵称
+                        </span>
+                        <div class="col-sm-8">
+                            <input placeholder="请输入昵称" name="nickName" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">
+                            邮箱
+                        </span>
+                        <div class="col-sm-8">
+                            <input placeholder="请输入邮箱" name="email" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">
+                            电话
+                        </span>
+                        <div class="col-sm-8">
+                            <input placeholder="请输入电话" name="phoneNum" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--导入左侧工具栏-->
+<!--<div th:replace="commons/move_bar :: moveBar"></div>-->
+
+<div th:replace="commons/onload_js :: onloadJS"></div>
+<script th:src="@{/js/user/user.js}" src="js/user/user.js"></script>
+</body>
+</html>
