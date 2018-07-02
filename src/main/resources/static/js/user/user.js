@@ -2,7 +2,7 @@ $(function () {
     $('#userTable').bootstrapTable({
         method: 'get',                      //请求方式（*）
         url: '/users/',
-        //toolbar: '#toolbar',              //工具按钮用哪个容器
+        toolbar: '#toolbar',              //工具按钮用哪个容器
         striped: true,                      //是否显示行间隔色
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
@@ -91,7 +91,7 @@ $(document).ready(function () {
                 message: 'The username is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The username is required and can\'t be empty'
+                        message: '用户名不能为空'
                     },
                     stringLength: {//检测长度
                         min: 6,
@@ -117,7 +117,7 @@ $(document).ready(function () {
             nickName: {
                 validators: {
                     notEmpty: {
-                        message: 'The password is required and can\'t be empty'
+                        message: '昵称不能为空'
                     },
                     stringLength: {//检测长度
                         min: 2,
