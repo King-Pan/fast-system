@@ -2,11 +2,15 @@ package club.javalearn.fastsystem.repository;
 
 import club.javalearn.fastsystem.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,4 +38,14 @@ public interface UserRepository extends JpaRepository<User,Long>,QuerydslPredica
      * @return 用户信息
      */
     User findByUserId(Long userId);
+
+
+    /**
+     * 更新用户最后登陆时间
+     * @param userId 用户编码
+     * @param loginTime  最后登陆时间
+     */
+    @Modifying
+    @Query(value = "update User set lastLoginTime = :loginTime where userId = :userId")
+    void updateLoginTime(@Param("userId") Long userId,@Param("loginTime") Date loginTime);
 }

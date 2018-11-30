@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -42,6 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserId(Long userId) {
         return userRepository.findByUserId(userId);
+    }
+
+    @Override
+    public void updateLoginTime(Long userId) {
+        userRepository.updateLoginTime(userId,new Date());
     }
 
     @Override

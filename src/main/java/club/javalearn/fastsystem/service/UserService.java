@@ -30,6 +30,12 @@ public interface UserService {
     User findByUserId(Long userId);
 
     /**
+     * 更新登陆时间
+     * @param userId 用户ID
+     */
+    void updateLoginTime(Long userId);
+
+    /**
      * 新增或者修改用户
      * @param userInfo 用户信息
      * @return 修改后的用户信息

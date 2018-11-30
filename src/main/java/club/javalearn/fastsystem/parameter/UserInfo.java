@@ -23,7 +23,7 @@ import java.util.Date;
 @ApiModel(value = "UserInfo", description = "用户信息")
 public class UserInfo implements Serializable {
 
-    public static Long serialVersionUID = 1l;
+    public static Long serialVersionUID = 1L;
 
     /**
      * 用戶编码-自增长策略
@@ -51,6 +51,11 @@ public class UserInfo implements Serializable {
      * 用户昵称
      */
     private String nickName;
+
+    /**
+     * 加密盐
+     */
+    private String salt;
 
     /**
      * 用户密码
@@ -82,6 +87,21 @@ public class UserInfo implements Serializable {
      */
     private String status;
 
+    public UserInfo(User user){
+        this.createTime = user.getCreateTime();
+        this.lastLoginTime = user.getLastLoginTime();
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.nickName = user.getNickName();
+        this.email = user.getEmail();
+        this.imgUrl = user.getImgUrl();
+        this.password = user.getPassword();
+        this.phoneNum = user.getPhoneNum();
+        this.status = user.getStatus();
+        this.updateTime = user.getUpdateTime();
+        this.salt = user.getSalt();
+    }
+
     public User convertUser() {
         User user = new User();
         user.setUserId(userId);
@@ -94,6 +114,7 @@ public class UserInfo implements Serializable {
         user.setCreateTime(createTime);
         user.setUpdateTime(updateTime);
         user.setLastLoginTime(lastLoginTime);
+        user.setSalt(user.getSalt());
 
         return user;
     }

@@ -71,7 +71,7 @@ $(function () {
         }]
     });
 
-    $("#infoModal").modal("show");
+    //$("#infoModal").modal("show");
     console.log($('#infoForm').serializeArray());
     console.log($('#infoForm').serialize());
 
